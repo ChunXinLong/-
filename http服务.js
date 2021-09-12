@@ -28,13 +28,28 @@ server.on('request', (Request, Response) => {
   Response.end('你好，世界')
 })
 // 最后还要绑定端口号，启动服务器
-server.listen(3000, () => {
+server.listen(3001, () => {
   //因为服务开启需要一点时间，所以可以在这里写一些日志
   console.log("服务开启了，可以通过http://127.0.0.1:3000/进行访问")
 })
 
 
 // 设置响应头
+const server2 = http.createServer()
+server2.on("request", (req, res) => {
+  // 设置让浏览器把响应的数据解析为纯文本,编码为utf-8,这样不会有中文乱码问题
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  res.end('响应')
+  // 设置让浏览器把响应的数据解析为文本或html,编码为utf-8,这样浏览器既可以解析html也可以解析文本，也不会有中文乱码问题
+  res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  res.end('<p>你好</p>')
+
+})
+server2.listen(5001, () => {
+  //因为服务开启需要一点时间，所以可以在这里写一些日志
+  console.log("服务开启了，可以通过http://127.0.0.1:5000/进行访问")
+})
+
 
 
 
