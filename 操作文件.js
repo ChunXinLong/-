@@ -31,3 +31,5 @@ fs.writeFile('文件路径', '写入的内容', err => {
   console.log(err)
 })
 
+
+

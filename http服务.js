@@ -30,7 +30,7 @@ server.on('request', (Request, Response) => {
 // 最后还要绑定端口号，启动服务器
 server.listen(3001, () => {
   //因为服务开启需要一点时间，所以可以在这里写一些日志
-  console.log("服务开启了，可以通过http://127.0.0.1:3000/进行访问")
+  console.log("服务开启了，可以通过http://127.0.0.1:3001/进行访问")
 })
 
 
@@ -41,16 +41,28 @@ server2.on("request", (req, res) => {
   res.setHeader('Content-Type', 'text/plain; charset=utf-8')
   res.end('响应')
   // 设置让浏览器把响应的数据解析为文本或html,编码为utf-8,这样浏览器既可以解析html也可以解析文本，也不会有中文乱码问题
-  res.setHeader('Content-Type', 'text/html; charset=utf-8')
-  res.end('<p>你好</p>')
+  // res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  // res.end('<p>你好</p>')
 
 })
-server2.listen(5001, () => {
+server2.listen(3002, () => {
   //因为服务开启需要一点时间，所以可以在这里写一些日志
-  console.log("服务开启了，可以通过http://127.0.0.1:5000/进行访问")
+  console.log("[设置响应头]服务开启了，可以通过http://127.0.0.1:3002/进行访问")
 })
 
-
+// 响应返回一个页面
+// 利用文件操作的fs.readFile()方法读取文件，把读取到的文件返回给前端
+const fs = require('fs')
+const server3 = http.createServer()
+server3.on('request',(req,res)=>{
+  res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  fs.readFile('./测试文件/响应文件测试.html', (err,resFile)=>{
+    res.end(resFile.toString())//这里也可以不用toString进行转换，因为end()支持2进制数据
+  })
+})
+server3.listen(3003,()=>{
+  console.log("[返回页面]服务已开启，地址是http://127.0.0.1:3003")
+})
 
 
 
